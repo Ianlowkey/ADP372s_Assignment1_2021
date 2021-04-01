@@ -1,89 +1,82 @@
 package za.ac.cput.ADP372s_Assignment1_2021;
 
 import org.junit.jupiter.api.*;
+
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Student Name: MARVIN LAMOHR
- * Student Number: 214273830
+ * Student Name: Ian Louw
+ * Student Number: 216250773
  */
 
 class TDDTest {
 
-    private TDDTest car1;
-    private TDDTest car2;
-    private TDDTest car3;
-    private TDDTest car4;
-
-    private TDDTest  shop1;
-    private TDDTest  shop2;
-    private TDDTest  shop3;
+    private TDDTest identity1;
+    private TDDTest identity2;
+    private TDDTest identity3;
+    private TDDTest identity4;
 
 
     @BeforeEach
     void setUp(){
 
-        car1 = new TDDTest ();
-        car2 = new TDDTest ();
-        car3 = new TDDTest ();
-        car4 = car2;
-
-
-        shop1 = new TDDTest ();
-        shop2 = shop3;
+        identity1 = new TDDTest();
+        identity2 = new TDDTest();
+        identity3 = new TDDTest();
+        identity4 = identity3;
 
     }
 
 
-    /* Testing For Object Equality */
-
     @Test
+    @DisplayName("This displays object equality")
     void objectEquality(){
 
-        assertEquals(car1,car1);
+        assertEquals(identity1, identity1);
+        System.out.println("Objects are equal!");
     }
 
 
-    /* Testing For Object Identity */
-
     @Test
+    @DisplayName("This displays object identity")
     void objectIdentity(){
 
-        assertSame(car2,car4);
+        assertSame(identity3, identity4);
+        System.out.println("Objects are identical");
 
     }
 
 
-    /* Making Sure The Test Fails */
-
     @Test
+    @DisplayName("This displays a failed test")
     void failingTest(){
 
-        fail("Load-Shedding...Shutting-Down...");
-        assertNotSame(shop1,car1);
+        fail("This test failed");
+        assertNotSame(identity1, identity2);
 
     }
 
 
-    /* Running Timeouts */
-
     @Test
-    @Timeout(3)
-    void timeOuts() throws InterruptedException {
+    @DisplayName("This displays a TimeOut")
+    void testTimeOut() {
 
-        Thread.sleep(300);
-        System.out.println("Test will pass soon... Please be patient...");
+        assertTimeout(Duration.ofMillis(100), () -> {
+            Thread.sleep(2000);
+
+            System.out.println("Test Timed out");
+        });
     }
 
 
-    /* Initiating A Disabling Test */
-
     @Test
-    @Disabled
-    void disablingTest() throws InterruptedException{
+    @Disabled("This displays a failed test")
+    void disablingTest() {
 
-        assertEquals(shop2,shop3);
-        System.out.println("Exit");
+        assertEquals(identity1,identity2);
+        System.out.println("Not yet implemented");
     }
 
 }
